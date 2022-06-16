@@ -7,3 +7,4 @@ create table item
     quantity integer,
     primary key (id)
 );
+
