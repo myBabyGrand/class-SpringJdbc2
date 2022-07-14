@@ -79,4 +79,44 @@ class MemberServiceTest {
 
     }
 
+    /**
+     * memberService : @Transactional - On
+     * memberRepository : @Transactional - On
+     * logRepository : @Transactional - On
+     * */
+    @Test
+    void outerTxOn_success(){
+        //given
+        String username = "outerTxOn_success";
+
+        //when
+        memberService.joinV1(username);
+
+        //then : 모든 데이터가 정상 저장
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isPresent());
+
+    }
+
+
+    /**
+     * memberService : @Transactional - On
+     * memberRepository : @Transactional - On
+     * logRepository : @Transactional - On Exception
+     * */
+    @Test
+    void outerTxOn_fail(){
+        //given
+        String username = "로그예외outerTxOn_fail";
+
+        //when
+        assertThatThrownBy(()->memberService.joinV1(username))
+                .isInstanceOf(RuntimeException.class);
+
+        //then : 모든 데이터가 정상 저장
+        assertTrue(memberRepository.find(username).isEmpty());
+        assertTrue(logRepository.find(username).isEmpty());
+
+    }
+
 }
