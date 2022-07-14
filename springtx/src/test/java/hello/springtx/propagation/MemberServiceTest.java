@@ -60,4 +60,23 @@ class MemberServiceTest {
 
     }
 
+    /**
+     * memberService : @Transactional - On
+     * memberRepository : @Transactional - Off
+     * logRepository : @Transactional - Off
+     * */
+    @Test
+    void singleTx(){
+        //given
+        String username = "singleTx";
+
+        //when
+        memberService.joinV1(username);
+
+        //then : 모든 데이터가 정상 저장
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isPresent());
+
+    }
+
 }
