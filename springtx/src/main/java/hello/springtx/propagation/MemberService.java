@@ -30,6 +30,7 @@ public class MemberService {
     }
 
     //트랜잭션을 각각 사용
+    @Transactional
     public void joinV2(String username){
         Member member = new Member(username);
         Log logMessage = new Log(username);
